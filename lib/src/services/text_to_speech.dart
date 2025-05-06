@@ -12,8 +12,8 @@ class TTSService {
   }
 
   Future<void> _initializeTts() async {
-    await _flutterTts.setLanguage('es-ES');
-    await _flutterTts.setPitch(1.0);
+    await _flutterTts.setLanguage('es-US');
+    await _flutterTts.setPitch(0.9);
 
     // Configurar callbacks del TTS
     _flutterTts.setStartHandler(() {
