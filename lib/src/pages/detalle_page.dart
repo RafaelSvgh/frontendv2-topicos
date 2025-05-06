@@ -17,9 +17,7 @@ class _DetallePageState extends State<DetallePage> {
   @override
   void initState() {
     super.initState();
-    _ttsService.onSpeakingStateChanged = (isSpeaking) {
-      setState(() {});
-    };
+    _ttsService.onSpeakingStateChanged = (isSpeaking) {};
   }
 
   @override
@@ -73,56 +71,67 @@ class _DetallePageState extends State<DetallePage> {
                     Text(
                       resultado.documento.trim(),
                       style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                     const SizedBox(height: 15),
                     if (resultado.tituloNumero != 'SN')
                       Text(
                         resultado.tituloNumero.trim(),
                         style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white70),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white70,
+                        ),
                       ),
                     if (resultado.tituloNombre != 'SN')
                       Text(
                         resultado.tituloNombre.trim(),
                         style: const TextStyle(
-                            fontSize: 16, color: Colors.white70),
+                          fontSize: 16,
+                          color: Colors.white70,
+                        ),
                       ),
                     const SizedBox(height: 12),
                     if (resultado.capituloNumero != 'SN')
                       Text(
                         resultado.capituloNumero.trim(),
                         style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white70),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white70,
+                        ),
                       ),
                     if (resultado.capituloNombre != 'SN')
                       Text(
                         resultado.capituloNombre.trim(),
                         style: const TextStyle(
-                            fontSize: 16, color: Colors.white70),
+                          fontSize: 16,
+                          color: Colors.white70,
+                        ),
                       ),
                     const SizedBox(height: 15),
                     Text(
                       '${resultado.articuloNumero}: ${resultado.articuloNombre}',
                       style: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white70),
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white70,
+                      ),
                     ),
                     const SizedBox(height: 20),
                     Text(
                       resultado.fragmento.trim(),
                       style: const TextStyle(
-                          fontSize: 16, height: 1.5, color: Colors.white70),
+                        fontSize: 16,
+                        height: 1.5,
+                        color: Colors.white70,
+                      ),
                       //textAlign: TextAlign.justify,
                     ),
-                    const SizedBox(height: 20),           
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),

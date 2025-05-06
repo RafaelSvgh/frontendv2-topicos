@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:front_ia/src/pages/chat_page.dart';
-import 'package:front_ia/src/pages/offline_search_page.dart';
 import 'package:go_router/go_router.dart';
+import 'package:front_ia/src/pages/pages.dart';
 
 final goRouter = GoRouter(
-  initialLocation: '/busqueda-offline',
+  initialLocation: '/ia-chat',
   errorBuilder: (_, __) => const Scaffold(body: Center(child: Text('Error'))),
   routes: [
-    GoRoute(path: '/ia-chat', builder: (context, state) => const ChatPage()),
-  GoRoute(
-        path: '/busqueda-offline',
-        builder: (context, state) => const OfflineSearchPage(),
-      ),
+    GoRoute(
+      path: '/ia-chat',
+      name: 'chat-ia',
+      builder: (context, state) => const ChatPage(),
+    ),
+    GoRoute(
+      path: '/busqueda-offline',
+      name: 'busqueda-offline',
+      builder: (context, state) => const OfflineSearchPage(),
+    ),
   ],
-
 );

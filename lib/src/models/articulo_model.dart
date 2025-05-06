@@ -11,9 +11,9 @@ class LegalSearchResult {
   final String capituloNumero;
   final String capituloNombre;
 
-  LegalSearchResult.LegalSearchResult({
+  LegalSearchResult.legalSearchResult({
     required this.documento,
-  
+
     required this.articuloNumero,
     required this.articuloNombre,
     required this.fragmento,
@@ -25,17 +25,17 @@ class LegalSearchResult {
   });
 
   factory LegalSearchResult.fromJson(Map<String, dynamic> json) {
-    return LegalSearchResult.LegalSearchResult(
-        documento: json['documento'],
-   
-        articuloNumero: json['articuloNumero'],
-        articuloNombre: json['articuloNombre'],
-        fragmento: json['fragmento'],
-        coincidencia: json['coincidencia'],
-        tituloNumero: json['tituloNumero'],
-        tituloNombre: json['tituloNombre'],
-        capituloNumero: json['capituloNumero'],
-        capituloNombre: json['capituloNombre']);
-  }
+    return LegalSearchResult.legalSearchResult(
+      documento: json['documento'],
 
+      articuloNumero: json['articuloNumero'],
+      articuloNombre: json['articuloNombre'],
+      fragmento: json['fragmento'],
+      coincidencia: json['coincidencia'],
+      tituloNumero: json['tituloNumero'],
+      tituloNombre: json['tituloNombre'],
+      capituloNumero: json['capituloNumero'],
+      capituloNombre: json['capituloNombre'],
+    );
+  }
 }

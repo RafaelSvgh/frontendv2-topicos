@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:front_ia/src/widgets/appbar.dart';
+import 'package:front_ia/src/widgets/drawer.dart';
 import '../models/articulo_model.dart';
 import '../widgets/articulo.dart';
 import '../services/db_helper.dart';
-
 
 class OfflineSearchPage extends StatefulWidget {
   const OfflineSearchPage({super.key});
@@ -12,10 +13,9 @@ class OfflineSearchPage extends StatefulWidget {
 }
 
 class _OfflineSearchPageState extends State<OfflineSearchPage> {
+  // ignore: unused_field
   List<LegalSearchResult> _todos = [];
   List<LegalSearchResult> _filtrados = [];
-
-  //String _query = '';
 
   @override
   void initState() {
@@ -25,22 +25,24 @@ class _OfflineSearchPageState extends State<OfflineSearchPage> {
 
   Future<void> _loadLeyes() async {
     final query = await DBHelper.getArticulosAleatorios(10);
-    final lista = query
-        .map((e) => LegalSearchResult.LegalSearchResult(
-              documento: e['documento'],
-              
-              articuloNumero: e['articuloNumero'].toString(),
-              articuloNombre: e['articuloNombre'],
-              fragmento: e['fragmento'],
-              coincidencia: '',
-            tituloNumero: e['tituloNumero'],
-            tituloNombre: e['tituloNombre'],
-            capituloNumero: e['capituloNumero'],
-            capituloNombre: e['capituloNombre']
+    if (!mounted) return;
+    final lista =
+        query
+            .map(
+              (e) => LegalSearchResult.legalSearchResult(
+                documento: e['documento'],
 
-            ))
-        .toList();
-
+                articuloNumero: e['articuloNumero'].toString(),
+                articuloNombre: e['articuloNombre'] ?? '',
+                fragmento: e['fragmento'] ?? '',
+                coincidencia: '',
+                tituloNumero: e['tituloNumero'] ?? '',
+                tituloNombre: e['tituloNombre'] ?? '',
+                capituloNumero: e['capituloNumero'] ?? '',
+                capituloNombre: e['capituloNombre'] ?? '',
+              ),
+            )
+            .toList();
     setState(() {
       _todos = lista;
       _filtrados = lista;
@@ -63,29 +65,32 @@ class _OfflineSearchPageState extends State<OfflineSearchPage> {
       return;
     }
 
-    final results =
-        await DBHelper.getArticulosAleatorios(500);
+    final results = await DBHelper.getArticulosAleatorios(500);
     final queryNormalizado = quitarTildes(query.toLowerCase());
+    if (!mounted) return;
+    final filtrados =
+        results
+            .where((e) {
+              final contenidoNormalizado = quitarTildes(
+                e['fragmento']?.toLowerCase() ?? '',
+              );
+              return contenidoNormalizado.contains(queryNormalizado);
+            })
+            .map(
+              (e) => LegalSearchResult.legalSearchResult(
+                documento: e['documento'],
 
-    final filtrados = results
-        .where((e) {
-          final contenidoNormalizado =
-              quitarTildes(e['fragmento']?.toLowerCase() ?? '');
-          return contenidoNormalizado.contains(queryNormalizado);
-        })
-        .map((e) => LegalSearchResult.LegalSearchResult(
-              documento: e['documento'],
-           
-              articuloNumero: e['articuloNumero'].toString(),
-              articuloNombre: e['articuloNombre'],
-              fragmento: e['fragmento'],
-              coincidencia: query,
-              tituloNumero: e['tituloNumero'],
-            tituloNombre: e['tituloNombre'],
-            capituloNumero: e['capituloNumero'],
-            capituloNombre: e['capituloNombre']
-            ))
-        .toList();
+                articuloNumero: e['articuloNumero'].toString(),
+                articuloNombre: e['articuloNombre'] ?? '',
+                fragmento: e['fragmento'] ?? '',
+                coincidencia: query,
+                tituloNumero: e['tituloNumero'] ?? '',
+                tituloNombre: e['tituloNombre'] ?? '',
+                capituloNumero: e['capituloNumero'] ?? '',
+                capituloNombre: e['capituloNombre'] ?? '',
+              ),
+            )
+            .toList();
 
     setState(() {
       _filtrados = filtrados;
@@ -93,9 +98,16 @@ class _OfflineSearchPageState extends State<OfflineSearchPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Normativa de Tránsito de Bolivia')),
+      appBar: appBar(theme, 'Normativa de Tránsito'),
+      drawer: drawer(theme, context),
       body: Column(
         children: [
           Padding(
@@ -124,19 +136,13 @@ class _OfflineSearchPageState extends State<OfflineSearchPage> {
                   ),
                   IconButton(
                     icon: const Icon(Icons.mic, color: Colors.white54),
-                    onPressed: () {
-                      // falta estoooo
-                    },
+                    onPressed: () {},
                   ),
                 ],
               ),
             ),
           ),
-          Expanded(
-            child: ArticuloResultsWidget(
-              resultados: _filtrados,
-            ),
-          ),
+          Expanded(child: ArticuloResultsWidget(resultados: _filtrados)),
         ],
       ),
     );

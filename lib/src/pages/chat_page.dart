@@ -96,7 +96,7 @@ class _ChatPageState extends State<ChatPage> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: appBar(theme, 'Asistente Virtual'),
-      drawer: drawer(theme),
+      drawer: drawer(theme, context),
       body: Column(
         children: [
           Expanded(

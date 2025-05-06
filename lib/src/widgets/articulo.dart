@@ -57,7 +57,7 @@ class ArticuloResultsWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
-                          '${r.articuloNumero}',
+                          r.articuloNumero,
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
